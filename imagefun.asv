@@ -1,0 +1,20 @@
+clc
+clear all
+% sample=phantom(256);
+sample=rgb2gray(imread('1.jpg')) 
+imshow(sample);
+[M N]=size(sample)
+
+
+% fmn=exp(2*pi*i*((0:N-1)'*(0:N-1))/N)/sqrt(N);
+for j=0:M-1
+            for k=0:N-1
+%                 for m=0:M-1
+%                        for n=0:N-1
+        
+                                 fmn(j+1,k+1)=(exp((2*pi*i*j*(0:M-1)')/M)/sqrt(M))*(exp((2*pi*i*k*(0:N-1))/N)/sqrt(N))
+%             end
+%         end
+    end
+end
+% cat(M*N,fmn)                

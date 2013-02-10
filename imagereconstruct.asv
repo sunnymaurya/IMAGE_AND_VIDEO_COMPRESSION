@@ -1,0 +1,24 @@
+clc
+clear all
+load gatlin;
+% X=phantom(256)
+% Z=rgb2gray(imread('2.jpg'));
+% imshow(X)
+% X=double(Z);
+Y=X(1:480,1:480);
+figure(1);
+% imshow(Y)
+image(X);
+
+figure(3)
+imshow(X);
+
+[U, D, V]= svd(Y);
+
+figure(2);
+A=zeros(480);
+for k=1:
+        A=A+D(k,k)*U(:,k)*V(:,k)';
+%         ginput(1)
+        image(A);
+end

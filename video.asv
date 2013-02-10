@@ -1,0 +1,40 @@
+% clc
+% clear all
+xyloObj = mmreader('xylophone.mpg');
+
+nFrames=xyloObj.NumberOfFrames
+vidHeight=xyloObj.Height;
+vidWidth=xyloObj.Width;
+
+% Mov struct
+
+mov(1:nFrames)=struct('cdata',zeros(vidHeight,vidWidth,3,'uint8'),'colormap',[ ]);
+
+mov2(1:nFrames)=struct('cdata',zeros(vidHeight,vidWidth,2,'double'),'colormap',[ ])
+frame=1:nFrames';
+for k = 1:nFrames
+    mov(k).cdata = read(xyloObj,k);
+    z=mov(k).cdata;
+%     imshow(mov(k).cdata);
+%     ginput(1);
+    luv=rgb2ntsc(z);
+    L=luv(:,:,1);
+    [U D V]=svd(L);
+    A=zeros(size(L));
+    for j=1:2
+    A=A+D(j,j)*U(:,j)*V(:,j)';
+%         ginput(1)
+       
+    end
+    A=uint8(A);
+     imshow(A);
+     luv2(:,:,1)=A;
+     luv2(:,:,2:3)=luv(:,:,2:3);
+   mov2(k).cdata=luv2; 
+end
+hf=figure
+set(hf,'position',[150 150 vidHeight vidWidth])
+
+movie(hf,mov2,5,nFrames/5);
+
+ 
